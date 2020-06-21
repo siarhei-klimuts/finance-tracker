@@ -1,0 +1,32 @@
+{
+  "name": "finance-tracker",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3100",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.10.1",
+    "@material-ui/icons": "^4.9.1",
+    "axios": "^0.19.2",
+    "camo": "^0.12.3",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.15",
+    "moment": "^2.26.0",
+    "multer": "^1.4.2",
+    "nedb": "^1.8.0",
+    "next": "9.4.4",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-dropzone": "^11.0.1",
+    "swr": "^0.2.2",
+    "xml2js": "^0.4.23"
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.6",
+    "@types/react": "^16.9.35",
+    "typescript": "^3.9.3"
+  }
+}
