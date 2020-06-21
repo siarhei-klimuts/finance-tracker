@@ -22,8 +22,8 @@ function Totals() {
     .groupBy(({date}) => moment(date).month())
     .mapValues((group, month) => ({
       month,
-      income: _.round(_.sumBy(group, ({amount, type}) => type === 'income' ? amount : 0), 2),
-      expense: _.round(_.sumBy(group, ({amount, type}) => type === 'expense' ? amount : 0), 2),
+      income: _.round(_.sumBy(group, ({amount, category}) => _.get(category, 'type') === 'FIXED_INCOME' ? amount : 0), 2),
+      expense: _.round(_.sumBy(group, ({amount, category}) => _.get(category, 'type') === 'FIXED_EXPENSE' ? amount : 0), 2),
     }))
     .values()
     .value();
