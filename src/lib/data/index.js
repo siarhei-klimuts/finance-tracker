@@ -5,15 +5,9 @@ import axios from 'axios'
 import { useUser } from 'lib/auth';
 
 function useRequest(request, config) {
-  const user = useUser();
-
   return useSWR(
-    [request, user],
-    () => axios(request, {
-      headers: {
-        // 'authorization': user ? user._id : '',
-      },
-    }).then(response => response.data),
+    request,
+    () => axios(request).then(response => response.data),
     config,
   );
 }
@@ -21,11 +15,7 @@ function useRequest(request, config) {
 function usePostData(url, data) {
   const user = useUser();
 
-  return useCallback(() => axios.post(url, data, {
-    headers: {
-      // 'authorization': user ? user._id : '',
-    },
-  }), [url, user, data]);
+  return useCallback((callbackData) => axios.post(url, callbackData || data), [url, user, data]);
 }
 
 export {

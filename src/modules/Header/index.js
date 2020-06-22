@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Header() {
+function Header({ onDrawerToggle }) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -52,7 +52,7 @@ function Header() {
   return (
     <AppBar position="static">
       <Toolbar>
-        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+        <IconButton edge="start" className={classes.menuButton} color="inherit" onClick={onDrawerToggle}>
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" className={classes.title}>

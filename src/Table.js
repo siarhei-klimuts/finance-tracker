@@ -16,7 +16,7 @@ const columns = [
   { id: 'date', label: 'Date', minWidth: 50 },
   { id: 'note', label: 'Note', minWidth: 100 },
   { id: 'amount', label: 'Amount', minWidth: 50 },
-  { id: 'type', label: 'Type', minWidth: 50 },
+  { id: 'category', label: 'Category', minWidth: 50, render: (row) => row.category ? row.category.name : 'None'},
 ];
 
 export default function StickyHeadTable() {
@@ -40,13 +40,13 @@ export default function StickyHeadTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {_.filter(data, (row) => moment(row.date).month() === 2 && row.type === 'income').map((row) => (
+            {_.map(data, (row) => (
               <TableRow hover role="checkbox" tabIndex={-1} key={row._id}>
                 {columns.map((column) => {
                   const value = row[column.id];
                   return (
                     <TableCell key={column.id} align={column.align}>
-                      {column.format && typeof value === 'number' ? column.format(value) : value}
+                      {column.render ? column.render(row) : value}
                     </TableCell>
                   );
                 })}
