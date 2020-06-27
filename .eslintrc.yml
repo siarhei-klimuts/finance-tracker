@@ -1,0 +1,18 @@
+parser: babel-eslint
+
+extends:
+  - airbnb
+  - airbnb/hooks
+
+settings:
+  import/resolver:
+    node:
+      moduleDirectory:
+        - node_modules
+        - src
+rules:
+  react/react-in-jsx-scope: 0
+  react/jsx-filename-extension: 0
+  react/jsx-props-no-spreading: 0
+  no-underscore-dangle: 0
+  lines-between-class-members: 0

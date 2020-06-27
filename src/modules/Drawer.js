@@ -12,15 +12,21 @@ function AppDrawer(props) {
   return (
     <Drawer {...props}>
       <List>
-        <Link href="/categories">
+        <Link href="/">
           <ListItem button>
-            <ListItemIcon>{<CollectionsIcon />}</ListItemIcon>
-            <ListItemText primary="Categories" />
+            <ListItemIcon><ArtTrackIcon /></ListItemIcon>
+            <ListItemText primary="Operations" />
           </ListItem>
         </Link>
         <Link href="/categories">
           <ListItem button>
-            <ListItemIcon>{<ArtTrackIcon />}</ListItemIcon>
+            <ListItemIcon><CollectionsIcon /></ListItemIcon>
+            <ListItemText primary="Categories" />
+          </ListItem>
+        </Link>
+        <Link href="/rules">
+          <ListItem button>
+            <ListItemIcon><ArtTrackIcon /></ListItemIcon>
             <ListItemText primary="Rules" />
           </ListItem>
         </Link>

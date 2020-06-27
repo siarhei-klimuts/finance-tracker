@@ -12,8 +12,9 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@material-ui/core/Button';
 
-import {useRequest, usePostData} from 'lib/data';
+import {useRequest, usePostData, useDeleteRequest} from 'lib/data';
 import { mutate } from 'swr';
 
 function SelectType({ category }) {
@@ -38,13 +39,25 @@ function SelectType({ category }) {
   );
 }
 
+function DeleteButton({categoryId}) {
+  const deleteRequest = useDeleteRequest(`/api/categories/${categoryId}`);
+
+  return (
+    <Button
+      onClick={() => deleteRequest().then(() => mutate('/api/categories'))}
+    >
+      Delete
+    </Button>
+  );
+}
+
 const columns = [
   { id: 'name', label: 'Name' },
   { id: 'type', label: 'Type', render: (row) => <SelectType category={row} /> },
+  { id: 'delete', render: (row) => <DeleteButton categoryId={row._id} />}
 ];
 
 function CategoriesTable({ data }) {
-  console.log(data)
   return (
     <TableContainer>
       <Table stickyHeader>

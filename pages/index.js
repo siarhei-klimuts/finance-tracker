@@ -1,11 +1,11 @@
 import Totals from 'modules/Totals';
-import Table from 'Table';
+import Operations from 'modules/Operations';
 import DashboardLayout from 'layouts/DashboardLayout';
 
 function HomePage() {
   return (
     <DashboardLayout
-      operations={<Table />}
+      operations={<Operations />}
       totals={<Totals />}
     />
   );
