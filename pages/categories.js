@@ -1,4 +1,5 @@
-import CategoriesList from 'modules/CategoriesList'
+import CategoriesList from 'modules/CategoriesList';
+
 function CategoriesPage() {
   return (
     <CategoriesList />

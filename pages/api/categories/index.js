@@ -7,7 +7,7 @@ async function get(req, res) {
 }
 
 async function post(req, res) {
-  const {id} = getJwtPayload(req);
+  const { id } = getJwtPayload(req);
   const category = await Category.create({
     name: req.body.name,
     type: 'OTHER',
@@ -25,7 +25,7 @@ export default async (req, res) => {
     case 'POST':
       return post(req, res);
     default:
-      res.setHeader('Allow', ['GET', 'POST'])
-      res.status(405).end(`Method ${method} Not Allowed`)
+      res.setHeader('Allow', ['GET', 'POST']);
+      res.status(405).end(`Method ${req.method} Not Allowed`);
   }
-}
+};

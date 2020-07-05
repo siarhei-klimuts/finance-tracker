@@ -5,9 +5,9 @@ import Operation from 'data/Operation';
 
 async function GET(req, res) {
   const { id } = getJwtPayload(req);
+  const operations = await Operation.find({ user: id }, { populate: false });
 
-  res.statusCode = 200;
-  res.json(await Operation.find({ user: id }));
+  return res.status(200).json(operations);
 }
 
 async function POST(req, res) {

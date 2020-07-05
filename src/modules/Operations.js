@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import _ from 'lodash';
 import { mutate } from 'swr';
 
@@ -18,6 +18,7 @@ import { useRequest, usePostData } from 'lib/data';
 function CategoryCell({ operation }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const { data: categories } = useRequest('/api/categories');
+  const categoriesById = useMemo(() => _.keyBy(categories, '_id'), [categories]);
   const postOperation = usePostData(`/api/operations/${operation._id}`);
   const handleCategoryChange = (category) => {
     setAnchorEl(null);
@@ -28,7 +29,7 @@ function CategoryCell({ operation }) {
   return (
     <>
       <Button onClick={({ currentTarget }) => setAnchorEl(currentTarget)}>
-        {operation.category ? operation.category.name : 'None'}
+        {_.get(categoriesById[operation.category], 'name', 'None')}
       </Button>
       <Menu
         anchorEl={anchorEl}
@@ -53,7 +54,7 @@ const columns = [
 ];
 
 export default function StickyHeadTable() {
-  const { data = [] } = useRequest('/api/operations');
+  const { data } = useRequest('/api/operations');
 
   return (
     <Paper>
@@ -73,18 +74,21 @@ export default function StickyHeadTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {_.map(data, (row) => (
-              <TableRow hover role="checkbox" tabIndex={-1} key={row._id}>
-                {columns.map((column) => {
-                  const value = row[column.id];
-                  return (
-                    <TableCell key={column.id} align={column.align}>
-                      {column.render ? column.render(row) : value}
-                    </TableCell>
-                  );
-                })}
-              </TableRow>
-            ))}
+            {_(data)
+              .orderBy('date')
+              .map((row) => (
+                <TableRow hover role="checkbox" tabIndex={-1} key={row._id}>
+                  {columns.map((column) => {
+                    const value = row[column.id];
+                    return (
+                      <TableCell key={column.id} align={column.align}>
+                        {column.render ? column.render(row) : value}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              ))
+              .value()}
           </TableBody>
         </Table>
       </TableContainer>

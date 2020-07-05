@@ -1,25 +1,21 @@
-import moment from 'moment';
 import _ from 'lodash';
 
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 
-import {useRequest, usePostData, useDeleteRequest} from 'lib/data';
+import { usePostData, useDeleteRequest } from 'lib/data';
 import { mutate } from 'swr';
 
 function SelectType({ category }) {
   const postCategory = usePostData(`/api/categories/${category._id}`);
-  const handleChange = ({target}) => {
+  const handleChange = ({ target }) => {
     postCategory({
       ...category,
       type: target.value,
@@ -39,7 +35,7 @@ function SelectType({ category }) {
   );
 }
 
-function DeleteButton({categoryId}) {
+function DeleteButton({ categoryId }) {
   const deleteRequest = useDeleteRequest(`/api/categories/${categoryId}`);
 
   return (
@@ -54,7 +50,7 @@ function DeleteButton({categoryId}) {
 const columns = [
   { id: 'name', label: 'Name' },
   { id: 'type', label: 'Type', render: (row) => <SelectType category={row} /> },
-  { id: 'delete', render: (row) => <DeleteButton categoryId={row._id} />}
+  { id: 'delete', render: (row) => <DeleteButton categoryId={row._id} /> },
 ];
 
 function CategoriesTable({ data }) {

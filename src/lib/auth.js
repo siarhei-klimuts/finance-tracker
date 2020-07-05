@@ -1,10 +1,8 @@
-import { createContext, useState, useMemo, useContext } from 'react';
+import {
+  createContext, useContext,
+} from 'react';
 
-import {useRequest} from 'lib/data';
-
-const initialState = {
-  user: null,
-};
+import { useRequest } from 'lib/data';
 
 const AuthContext = createContext({
   state: {
@@ -26,7 +24,8 @@ function AuthProvider(props) {
   return (
     <AuthContext.Provider
       value={value}
-      {...props}/>
+      {...props}
+    />
   );
 }
 

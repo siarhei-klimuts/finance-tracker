@@ -1,20 +1,19 @@
 import React from 'react';
 import _ from 'lodash';
 
-import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 
-import {useRequest} from 'lib/data';
+import { useRequest } from 'lib/data';
+import ActionsMenu from './ActionsMenu';
 
-function Category({categoryId}) {
-  const {data: categories} = useRequest('/api/categories');
+function Category({ categoryId }) {
+  const { data: categories } = useRequest('/api/categories');
   const map = _.keyBy(categories, '_id');
 
   return categories ? _.get(map[categoryId], 'name', null) : null;
@@ -29,11 +28,15 @@ const columns = [
     id: 'category',
     label: 'Category',
     minWidth: 50,
-    render: (value) => <Category categoryId={value} />
+    render: (value) => <Category categoryId={value} />,
+  },
+  {
+    id: 'actions',
+    render: (row) => <ActionsMenu uuid={row.uuid} />,
   },
 ];
 
-function OperationsTable({items}) {
+function OperationsTable({ items }) {
   return (
     <Paper>
       <TableContainer>
@@ -52,10 +55,10 @@ function OperationsTable({items}) {
           </TableHead>
           <TableBody>
             {_.map(items, (row, index) => (
-              <TableRow hover key={index}>
+              <TableRow hover key={index} style={{ backgroundColor: row.duplicate ? '#ffb8b8' : '' }}>
                 {columns.map((column) => (
                   <TableCell key={column.id}>
-                    {column.render ? column.render(row[column.id]) : row[column.id]}
+                    {column.render ? column.render(row) : row[column.id]}
                   </TableCell>
                 ))}
               </TableRow>
